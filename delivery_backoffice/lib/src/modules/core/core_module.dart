@@ -9,7 +9,7 @@ class CoreModule extends Module {
    @override
    List<Bind> get binds => [
     Bind.lazySingleton<Storage>((i) => SessionStorage(), export: true),
-    Bind.lazySingleton((i) => CustomDio(), export: true)
+    Bind.lazySingleton((i) => CustomDio(i()), export: true)
    ];
 
 
