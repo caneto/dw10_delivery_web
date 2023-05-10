@@ -16,13 +16,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with Loader, Messages {
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-      body: Container(
-        child: Container(
-          width: context.percentWidth(.5),
-          height: context.percentHeight(.9),
-          child: Text(context.screenWidth.toString()),
-        ),
+    return Container(
+      child: Container(
+        width: context.percentWidth(.5),
+        height: context.percentHeight(.9),
+        child: Text(context.screenWidth.toString()),
       ),
     );
   }
