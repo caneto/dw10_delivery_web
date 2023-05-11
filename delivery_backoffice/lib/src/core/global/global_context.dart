@@ -16,7 +16,8 @@ class GlobalContext {
     return _instance!;
   }
 
-  set navigatorKey(GlobalKey<NavigatorState> key) => _navigatorkey;
+  set navigatorKey(GlobalKey<NavigatorState> navigationKey) =>
+      _navigatorkey = navigationKey;
 
   void loginExpire() {
     Modular.get<Storage>().clean();
