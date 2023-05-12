@@ -27,6 +27,10 @@ class _PaymentTypePageState extends State<PaymentTypePage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final filterDisposer = reaction((_) => controller.filterEnabled, (_) {
+        controller.loadPayments();
+      });
+
       final statusDisposer = reaction(
         (_) => controller.status,
         (status) {
@@ -50,12 +54,25 @@ class _PaymentTypePageState extends State<PaymentTypePage>
               hideLoader();
               showAddOrUpdatePayment();
               break;
+            case PaymentTypeStateStatus.saved:
+              hideLoader();
+              Navigator.of(context, rootNavigator: true).pop();
+              controller.loadPayments();
+              break;  
           }
         },
       );
-      disposers.addAll([statusDisposer]);
+      disposers.addAll([statusDisposer, filterDisposer]);
       controller.loadPayments();
     });
+  }
+
+  @override
+  void dispose() {
+    for (final dispose in disposers) {
+      dispose();
+    }
+    super.dispose();
   }
 
   void showAddOrUpdatePayment() {
@@ -70,7 +87,10 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             ),
             backgroundColor: Colors.white,
             elevation: 10,
-            child: PaymentTypeFormModal(model: controller.paymentTypeSelected),
+            child: PaymentTypeFormModal(
+              model: controller.paymentTypeSelected,
+              controller: controller,
+            ),
           ),
         );
       },
