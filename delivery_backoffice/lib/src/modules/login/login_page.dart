@@ -178,4 +178,6 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
       controller.login(_emailEC.text, _passwordEC.text);
     }
   }
+
+  
 }
