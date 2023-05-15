@@ -1,13 +1,13 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../repositories/products/product_repository_impl.dart';
+import 'home/product_controller.dart';
 import 'home/products_page.dart';
 
 class ProducsModule extends Module {
 
    @override
    List<Bind> get binds => [
-    Bind.lazySingleton((i) => ProductRepositoryImpl(i()))
+    Bind.lazySingleton((i) => ProductController(i()))
    ];
 
    @override

@@ -31,7 +31,7 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<List<ProductModel>> finalAll(String? name) async {
     try {
       final productResult = await _dio.auth().get(
-        '/products/',
+        '/products',
         queryParameters: {
           if (name != null) 'name': name,
           'enabled': true,
