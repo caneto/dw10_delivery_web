@@ -63,7 +63,7 @@ class _ProductsPageState extends State<ProductsPage> with Loader, Messages {
             title: 'ADMINISTRAR PRODUTOS',
             buttonLabel: 'ADICIONAR PRODUTO',
             buttonPressed: () async {
-              await Modular.to.pushNamed('/products/detail');
+              await Modular.to.pushNamed('/products/product-detail');
               controller.loadProducts();
             },
             searchChange: (value) {
