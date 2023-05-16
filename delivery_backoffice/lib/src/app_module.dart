@@ -16,14 +16,14 @@ class AppModule extends Module {
         ModuleRoute('/login', module: LoginModule()),
         ChildRoute(
           '/',
-          child: (context, args) => const BaseLayout(
-            body: RouterOutlet(),
-          ),
           transition: TransitionType.noTransition,
           children: [
             ModuleRoute('/payment-type', module: PaymentTypeModule()),
             ModuleRoute('/products', module: ProducsModule())
           ],
+          child: (context, args) => const BaseLayout(
+            body: RouterOutlet(),
+          ),
         ),
       ];
 }

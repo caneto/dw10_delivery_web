@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
+import 'package:validatorless/validatorless.dart';
 
 import '../../../core/env/env.dart';
+import '../../../core/ui/helpers/loader.dart';
+import '../../../core/ui/helpers/messages.dart';
 import '../../../core/ui/helpers/size_extensions.dart';
+import '../../../core/ui/helpers/upload_html_helper.dart';
 import '../../../core/ui/styles/text_styles.dart';
 import 'product_detail_controller.dart';
 import 'widget/product_textformfield.dart';
@@ -19,12 +24,56 @@ class ProductDetailPage extends StatefulWidget {
   State<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
-  final _nomeEC = TextEditingController();
-  final _precoEC = TextEditingController();
-  final _descricaoEC = TextEditingController();
+class _ProductDetailPageState extends State<ProductDetailPage>
+    with Loader, Messages {
+  final _formKey = GlobalKey<FormState>();
+  final _nameEC = TextEditingController();
+  final _priceEC = TextEditingController();
+  final _descriptionEC = TextEditingController();
 
   final controller = Modular.get<ProductDetailController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      reaction((_) => controller.status, (status) {
+        switch (status) {
+          case ProductDetailStateStatus.initial:
+            break;
+          case ProductDetailStateStatus.loading:
+            showLoader();
+            break;
+          case ProductDetailStateStatus.loaded:
+            hideLoader();
+            break;
+          case ProductDetailStateStatus.error:
+            hideLoader();
+            showError(controller.errorMessage!);
+            break;
+          case ProductDetailStateStatus.errorLoadProduct:
+            break;
+          case ProductDetailStateStatus.deleted:
+            break;
+          case ProductDetailStateStatus.uploaded:
+            hideLoader();
+            break;
+          case ProductDetailStateStatus.saved:
+            hideLoader();
+            Navigator.pop(context);
+            break;
+        }
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameEC.dispose();
+    _priceEC.dispose();
+    _descriptionEC.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +84,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       padding: const EdgeInsets.only(left: 40, top: 40, right: 40),
       child: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               Row(
@@ -82,12 +132,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       Container(
                         margin: const EdgeInsets.all(10),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            UploadHtmlHelper().startUpload(
+                              controller.uploadImageProduct,
+                            );
+                          },
                           style: TextButton.styleFrom(
                             elevation: 5,
                             backgroundColor: Colors.white.withOpacity(0.9),
                           ),
-                          child: const Text('Adicionar Foto'),
+                          child: Observer(
+                            builder: (_) {
+                              return Text(
+                                '${controller.imagePath == null ? 'Adicionar' : 'Alterar'} Foto',
+                              );
+                            },
+                          ),
                         ),
                       )
                     ],
@@ -97,9 +157,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       children: [
                         ProductTextformfield(
                           title: 'Nome',
-                          controller: _nomeEC,
+                          controller: _nameEC,
                           //onFieldSubmitted: (_) => _enterButton(),
-                          validator: null,
+                          validator: Validatorless.required('Nome obrigatório'),
                           hintText: 'Digite o titulo do produto',
                           keyboardType: TextInputType.name,
                         ),
@@ -108,9 +168,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                         ProductTextformfield(
                           title: 'Preço',
-                          controller: _precoEC,
+                          controller: _priceEC,
                           //onFieldSubmitted: (_) => _enterButton(),
-                          validator: null,
+                          validator:
+                              Validatorless.required('Preço obrigatório'),
                           hintText: 'Digite o valor do produto',
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -130,9 +191,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 minLines: 10,
                 title: 'Descrição',
                 alignLabelWithHint: true,
-                controller: _descricaoEC,
+                controller: _descriptionEC,
                 //onFieldSubmitted: (_) => _enterButton(),
-                validator: null,
+                validator: Validatorless.required('Descrição obrigatória'),
                 hintText: 'Digite a descrição do produto',
                 keyboardType: TextInputType.multiline,
               ),
@@ -170,7 +231,25 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         width: widthButtonAction / 2,
                         height: 60,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            final valid =
+                                _formKey.currentState?.validate() ?? false;
+                            if (valid) {
+                              if (controller.imagePath == null) {
+                                showWarning(
+                                  'Imagem obrigatória, por favor clieque em adicionar foto',
+                                );
+                                return;
+                              }
+                              controller.save(
+                                _nameEC.text,
+                                UtilBrasilFields.converterMoedaParaDouble(
+                                  _priceEC.text,
+                                ),
+                                _descriptionEC.text,
+                              );
+                            }
+                          },
                           child: Text(
                             'Salvar',
                             style: context.textStyles.textBold.copyWith(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/ui/helpers/loader.dart';
 import '../../core/ui/helpers/messages.dart';
-import '../../core/ui/helpers/size_extensions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,12 +13,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with Loader, Messages {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Container(
-        width: context.percentWidth(.5),
-        height: context.percentHeight(.9),
-        child: Text(context.screenWidth.toString()),
-      ),
-    );
+    return const Center(child: Text('Home'));
   }
 }

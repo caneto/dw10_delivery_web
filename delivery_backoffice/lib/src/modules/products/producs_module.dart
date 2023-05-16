@@ -16,10 +16,11 @@ class ProducsModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const ProductsPage()),
-        ChildRoute(
-          '/detail',
+        ChildRoute<ProductsPage>('/',
+            child: (context, args) => const ProductsPage()),
+        ChildRoute<ProductDetailPage>(
+          '/product-detail',
           child: ((context, args) => const ProductDetailPage(productId: null)),
-        )
+        ),
       ];
 }
