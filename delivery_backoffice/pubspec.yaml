@@ -22,7 +22,7 @@ dependencies:
   dio: ^5.1.2
   validatorless: ^1.2.3
   url_strategy: ^0.2.0
-  brasil_fields: ^1.12.0
+  brasil_fields: ^1.13.1
   
 
 dev_dependencies:
@@ -30,7 +30,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.1
-  build_runner: ^2.4.2
+  build_runner: ^2.4.4
   mobx_codegen: ^2.3.0
 
 
@@ -42,8 +42,6 @@ flutter:
     - .env
     - assets/images/
     - assets/images/icons/
-
-
 
   fonts:
     - family: mplus1

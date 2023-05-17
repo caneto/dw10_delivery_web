@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'modules/core/core_module.dart';
 import 'modules/login/login_module.dart';
+import 'modules/order/order_module.dart';
 import 'modules/payment_type/payment_type_module.dart';
 import 'modules/products/producs_module.dart';
 import 'modules/template/base_layout.dart';
@@ -19,7 +20,8 @@ class AppModule extends Module {
           transition: TransitionType.noTransition,
           children: [
             ModuleRoute('/payment-type', module: PaymentTypeModule()),
-            ModuleRoute('/products', module: ProducsModule())
+            ModuleRoute('/products', module: ProducsModule()),
+            ModuleRoute('/orders', module: OrderModule())
           ],
           child: (context, args) => const BaseLayout(
             body: RouterOutlet(),
