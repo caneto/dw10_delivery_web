@@ -11,25 +11,27 @@ class OrderHeader extends StatefulWidget {
 }
 
 class _OrderHeaderState extends State<OrderHeader> {
+  OrderStatus? statusSelected;
+
   @override
   Widget build(BuildContext context) {
     return BaseHeader(
       title: 'Administrar Pedidos',
       addButton: false,
       filterWidget: DropdownButton<OrderStatus>(
-        value: null,
+        value: statusSelected,
         items: [
           const DropdownMenuItem(value: null, child: Text('Todos')),
-          ...OrderStatus.values.map((s) => DropdownMenuItem(value: s, child: Text(s.name))).toList()
-          
+          ...OrderStatus.values
+              .map((s) => DropdownMenuItem(value: s, child: Text(s.name)))
+              .toList()
         ],
         onChanged: (value) {
           setState(() {
-            enabled = value;
-            widget.controller.changeFilter(value);  
-          });          
+            statusSelected = value;
+          });
         },
-      ),,
+      ),
     );
   }
 }
