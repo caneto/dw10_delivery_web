@@ -14,6 +14,7 @@ enum OrderStateStatus {
   loading,
   loaded,
   error,
+  showDetailModal,
 }
 
 abstract class OrderControllerBase with Store {
@@ -55,6 +56,6 @@ abstract class OrderControllerBase with Store {
   Future<void> showDetailModal(OrderModel model) async {
     _status = OrderStateStatus.loading;
     await Future.delayed(Duration.zero);
-    
+    _status = OrderStateStatus.showDetailModal;
   }
 }
