@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../core/ui/helpers/loader.dart';
 import '../../core/ui/helpers/messages.dart';
-import 'detail/order_detail_modal.dart';
+import 'widgets/order_detail_modal.dart';
 import 'order_controller.dart';
 import 'widgets/order_header.dart';
 import 'widgets/order_item.dart';
@@ -17,14 +17,16 @@ class OrderPage extends StatefulWidget {
   State<OrderPage> createState() => _OrderPageState();
 }
 
-class _OrderPageState extends State<OrderPage> with Loader, Messages {
-  final controller = Modular.get<OrderController>();
-  late final ReactionDisposer statusDisposer;
+class _OrderPageState extends State<OrderPage>
+    with Loader<OrderPage>, Messages<OrderPage> {
+  late final _controller = context.read<OrderController>();
+  late final ReactionDisposer _statusDisposer;
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      statusDisposer = reaction((_) => controller.status, (status) {
+      _statusDisposer = reaction((_) => _controller.status, (status) {
         switch (status) {
           case OrderStateStatus.initial:
             break;
@@ -36,31 +38,29 @@ class _OrderPageState extends State<OrderPage> with Loader, Messages {
             break;
           case OrderStateStatus.error:
             hideLoader();
-            showError(controller.errorMessage ?? 'Erro interno');
+            showError(_controller.errorMessage ?? 'Erro interno');
             break;
           case OrderStateStatus.showDetailModal:
             hideLoader();
-            showOrderDetail();
+            _showOrderDetail();
             break;
         }
       });
-      controller.findOrders();
+      _controller.findOrders();
     });
-    super.initState();
   }
 
-  void showOrderDetail() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const OrderDetailModal();
-      },
-    );
-  }
+  void _showOrderDetail() => showDialog<void>(
+        context: context,
+        builder: (_) => OrderDetailModal(
+          controller: _controller,
+          order: _controller.orderSelected!,
+        ),
+      );
 
   @override
   void dispose() {
-    statusDisposer();
+    _statusDisposer();
     super.dispose();
   }
 
@@ -81,14 +81,14 @@ class _OrderPageState extends State<OrderPage> with Loader, Messages {
                 child: Observer(
                   builder: (_) {
                     return GridView.builder(
-                      itemCount: controller.orders.length,
+                      itemCount: _controller.orders.length,
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
                         mainAxisExtent: 91,
                         maxCrossAxisExtent: 600,
                       ),
                       itemBuilder: (context, index) {
-                        return OrderItem(order: controller.orders[index]);
+                        return OrderItem(order: _controller.orders[index]);
                       },
                     );
                   },

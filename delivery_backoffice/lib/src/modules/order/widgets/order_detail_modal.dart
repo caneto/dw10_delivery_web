@@ -3,12 +3,21 @@ import 'package:flutter/material.dart';
 import '../../../core/extensions/formatter_extensions.dart';
 import '../../../core/ui/helpers/size_extensions.dart';
 import '../../../core/ui/styles/text_styles.dart';
-import 'widgets/order_botton_bar.dart';
-import 'widgets/order_info_tile.dart';
-import 'widgets/order_product_item.dart';
+import '../../../dto/order/order_dto.dart';
+import '../order_controller.dart';
+import '../detail/widgets/order_botton_bar.dart';
+import '../detail/widgets/order_info_tile.dart';
+import '../detail/widgets/order_product_item.dart';
 
 class OrderDetailModal extends StatefulWidget {
-  const OrderDetailModal({super.key});
+  final OrderController controller;
+  final OrderDto order;
+
+  const OrderDetailModal({
+    super.key,
+    required this.controller,
+    required this.order,
+  });
 
   @override
   State<OrderDetailModal> createState() => _OrderDetailModalState();
@@ -98,11 +107,14 @@ class _OrderDetailModalState extends State<OrderDetailModal> {
                   ),
                 ),
                 const Divider(),
-                const OrderInfoTile(label: 'Endereço de Entrega: ', info: 'Rua Assis Carneiro, 80'),
+                const OrderInfoTile(
+                    label: 'Endereço de Entrega: ',
+                    info: 'Rua Assis Carneiro, 80'),
                 const Divider(),
-                const OrderInfoTile(label: 'Forma de Pagamento: ', info: 'Cartão de Crédito'),
+                const OrderInfoTile(
+                    label: 'Forma de Pagamento: ', info: 'Cartão de Crédito'),
                 const SizedBox(
-                   height: 10,
+                  height: 10,
                 ),
                 const OrderBottonBar()
               ],
