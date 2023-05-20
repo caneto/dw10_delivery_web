@@ -5,7 +5,7 @@ import 'detail/product_detail_page.dart';
 import 'home/product_controller.dart';
 import 'home/products_page.dart';
 
-class ProducsModule extends Module {
+class ProductsModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.lazySingleton((i) => ProductController(i())),
