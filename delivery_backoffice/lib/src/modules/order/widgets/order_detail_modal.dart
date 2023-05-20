@@ -76,14 +76,14 @@ class _OrderDetailModalState extends State<OrderDetailModal> {
                       width: 20,
                     ),
                     Text(
-                      'Carlos Alberto',
+                      widget.order.user.name,
                       style: context.textStyles.textRegular,
                     )
                   ],
                 ),
                 const Divider(),
-                ...List.generate(3, (index) => index)
-                    .map((e) => OrderProductItem())
+                ...widget.order.orderProducts
+                    .map((op) => OrderProductItem(orderProduct: op))
                     .toList(),
                 const SizedBox(
                   height: 10,
@@ -99,7 +99,13 @@ class _OrderDetailModalState extends State<OrderDetailModal> {
                             .copyWith(fontSize: 18),
                       ),
                       Text(
-                        200.0.currencyPTBR,
+                        widget.order.orderProducts
+                            .fold<double>(
+                              0.0,
+                              (previousValue, p) =>
+                                  previousValue + p.totalPrice,
+                            )
+                            .currencyPTBR,
                         style: context.textStyles.textExtraBold
                             .copyWith(fontSize: 18),
                       )
@@ -107,12 +113,15 @@ class _OrderDetailModalState extends State<OrderDetailModal> {
                   ),
                 ),
                 const Divider(),
-                const OrderInfoTile(
-                    label: 'Endereço de Entrega: ',
-                    info: 'Rua Assis Carneiro, 80'),
+                OrderInfoTile(
+                  label: 'Endereço de Entrega: ',
+                  info: widget.order.address,
+                ),
                 const Divider(),
-                const OrderInfoTile(
-                    label: 'Forma de Pagamento: ', info: 'Cartão de Crédito'),
+                OrderInfoTile(
+                  label: 'Forma de Pagamento: ',
+                  info: widget.order.paymentTypeModel.name,
+                ),
                 const SizedBox(
                   height: 10,
                 ),
