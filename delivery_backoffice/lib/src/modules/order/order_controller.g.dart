@@ -115,6 +115,14 @@ mixin _$OrderController on OrderControllerBase, Store {
     return _$showDetailModalAsyncAction.run(() => super.showDetailModal(model));
   }
 
+  late final _$changeStatusAsyncAction =
+      AsyncAction('OrderControllerBase.changeStatus', context: context);
+
+  @override
+  Future<void> changeStatus(OrderStatus status) {
+    return _$changeStatusAsyncAction.run(() => super.changeStatus(status));
+  }
+
   @override
   String toString() {
     return '''

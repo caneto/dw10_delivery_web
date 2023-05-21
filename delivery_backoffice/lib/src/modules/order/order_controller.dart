@@ -17,6 +17,7 @@ enum OrderStateStatus {
   loaded,
   error,
   showDetailModal,
+  statusChanged,
 }
 
 abstract class OrderControllerBase with Store {
@@ -63,5 +64,12 @@ abstract class OrderControllerBase with Store {
     _status = OrderStateStatus.loading;
     _orderSelected = await _getOrderById(model);
     _status = OrderStateStatus.showDetailModal;
+  }
+
+  @action
+  Future<void> changeStatus(OrderStatus status) async {
+    _status = OrderStateStatus.loading;
+    await _orderRepository.changeStatus(_orderSelected!.id, status);
+    _status = OrderStateStatus.statusChanged;
   }
 }
