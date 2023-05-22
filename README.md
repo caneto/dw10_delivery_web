@@ -35,7 +35,7 @@
 <h2>📱 Preview</h2>
 
    <p align="center">
-      <img src=".github/Vakinha-Burger-Demo.gif" width="400" alt="Vakinha Burger Demonstração">
+      <img src="https://github.com/caneto/dw10_delivery_web/blob/main/images/image_login.png" width="200" alt="Vakinha Burger Demonstração">
    </p>
 
 ---
