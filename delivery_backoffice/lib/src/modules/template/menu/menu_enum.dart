@@ -25,4 +25,13 @@ enum Menu {
 
   const Menu(this.rounte, this.assetIcon, this.assetIconSelected, this.label);
 
+  static Menu? findByPath(String path) {
+    final menu = Menu.values.where((element) => path.contains(element.rounte));
+
+    if(menu.isNotEmpty){
+      return menu.first;
+    }
+    return null;
+  }
+
 }

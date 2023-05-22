@@ -48,7 +48,7 @@ class _OrderPageState extends State<OrderPage>
             hideLoader();
             Navigator.of(context, rootNavigator: true).pop();
             _controller.findOrders();
-            break;  
+            break;
         }
       });
       _controller.findOrders();
@@ -78,7 +78,9 @@ class _OrderPageState extends State<OrderPage>
           padding: const EdgeInsets.only(left: 40, top: 40, right: 40),
           child: Column(
             children: [
-              const OrderHeader(),
+              OrderHeader(
+                controller: _controller,
+              ),
               const SizedBox(
                 height: 50,
               ),

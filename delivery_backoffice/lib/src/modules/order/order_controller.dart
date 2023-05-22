@@ -67,6 +67,12 @@ abstract class OrderControllerBase with Store {
   }
 
   @action
+  void changeStatusFilter(OrderStatus? status) {
+    _statusFilter = status;
+    findOrders();
+  }
+
+  @action
   Future<void> changeStatus(OrderStatus status) async {
     _status = OrderStateStatus.loading;
     await _orderRepository.changeStatus(_orderSelected!.id, status);
