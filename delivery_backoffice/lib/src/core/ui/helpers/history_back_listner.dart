@@ -13,7 +13,17 @@ mixin HistoryBackListner<T extends StatefulWidget> on State<T> {
   void initState() {
     super.initState();
     _location.addPopStateListener((event) async {
-
+      await Future.delayed(const Duration(microseconds: 200), () {
+        if(mounted) {
+          onHistoryBack(event);
+        }
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    _location.removePopStateListener((event) => null);
+    super.dispose();
   }
 }
