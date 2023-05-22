@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets\images\logo.png" width="100" alt="Logo App Vakinha Burger"/>
+    <img src="\delivery_backoffice\assets\images\logo.png" width="100" alt="Logo App Vakinha Burger"/>
 </p>
 
 <h1 align="center">Vakinha Burger BackOffice</h1>
