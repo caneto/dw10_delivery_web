@@ -13,15 +13,15 @@ class OrderModule extends Module {
         Bind.lazySingleton<OrderRepository>((i) => OrderRepositoryImpl(i())),
         Bind.lazySingleton<GetOrderById>(
           (i) => GetOrderByIdImpl(
-            i(),
-            i(),
-            i(),
+            paymentTypeRepository: i(),
+            userRepository: i(),
+            productsRepository: i(),
           ),
         ),
         Bind.lazySingleton(
           (i) => OrderController(
-            i(),
-            i(),
+            getOrderById: i(),
+            orderRepository: i(),
           ),
         ),
       ];

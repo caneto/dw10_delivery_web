@@ -12,7 +12,7 @@ import './auth_repository.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final CustomDio _dio;
 
-  AuthRepositoryImpl(this._dio);
+  AuthRepositoryImpl({required CustomDio dio}) : _dio = dio;
 
   @override
   Future<AuthModel> login(String email, String password) async {
@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
         throw UnauthorizedException();
       }
       log('Erro ao realizar login', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao realizar login');
+      throw const RespositoryException(message: 'Erro ao realizar login');
     }
   }
 }

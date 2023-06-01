@@ -8,16 +8,18 @@ import '../../repositories/products/product_repository.dart';
 import '../../repositories/user/user_repository.dart';
 import './get_order_by_id.dart';
 
-class GetOrderByIdImpl implements GetOrderById {
+final class GetOrderByIdImpl implements GetOrderById {
   final PaymentTypeRepository _paymentTypeRepository;
   final UserRepository _userRepository;
   final ProductRepository _productRepository;
 
-  GetOrderByIdImpl(
-    this._paymentTypeRepository,
-    this._userRepository,
-    this._productRepository,
-  );
+  const GetOrderByIdImpl({
+    required PaymentTypeRepository paymentTypeRepository,
+    required UserRepository userRepository,
+    required ProductRepository productsRepository,
+  })  : _paymentTypeRepository = paymentTypeRepository,
+        _userRepository = userRepository,
+        _productRepository = productsRepository;
 
   @override
   Future<OrderDto> call(OrderModel order) => _orderDtoParse(order);

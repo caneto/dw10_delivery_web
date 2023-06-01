@@ -23,7 +23,10 @@ class ProductRepositoryImpl implements ProductRepository {
       );
     } on DioError catch (e, s) {
       log('Erro ao deletar produto', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao deletar produto');
+      Error.throwWithStackTrace(
+        const RespositoryException(message: 'Erro ao deletar produto'),
+        s,
+      );
     }
   }
 
@@ -43,7 +46,11 @@ class ProductRepositoryImpl implements ProductRepository {
           .toList();
     } on DioError catch (e, s) {
       log('Erro ao buscar produtos', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao buscar produtos');
+
+      Error.throwWithStackTrace(
+        const RespositoryException(message: 'Erro ao buscar produtos'),
+        s,
+      );
     }
   }
 
@@ -57,7 +64,11 @@ class ProductRepositoryImpl implements ProductRepository {
       return ProductModel.fromMap(productResult.data);
     } on DioError catch (e, s) {
       log('Erro ao busca produto $id', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao busca produto $id');
+
+      Error.throwWithStackTrace(
+        RespositoryException(message: 'Erro ao buscar produto $id'),
+        s,
+      );
     }
   }
 
@@ -73,7 +84,10 @@ class ProductRepositoryImpl implements ProductRepository {
       }
     } on DioError catch (e, s) {
       log('Erro ao salvar produto', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao salvar produto');
+      Error.throwWithStackTrace(
+        const RespositoryException(message: 'Erro ao salvar produto'),
+        s,
+      );
     }
   }
 
@@ -89,9 +103,12 @@ class ProductRepositoryImpl implements ProductRepository {
       final respose = await _dio.auth().post('/uploads', data: formData);
 
       return respose.data['url'];
-    } on DioError catch (e,s) {
+    } on DioError catch (e, s) {
       log('Erro ao fazer upload do arquivo', error: e, stackTrace: s);
-      throw RespositoryException(message: 'Erro ao fazer upload do arquivo');
+      Error.throwWithStackTrace(
+        const RespositoryException(message: 'Erro ao fazer upload do arquivo'),
+        s,
+      );
     }
   }
 }

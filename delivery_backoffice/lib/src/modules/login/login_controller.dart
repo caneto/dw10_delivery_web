@@ -21,23 +21,27 @@ abstract class LoginControllerBase with Store {
 
   @readonly
   var _loginStatus = LoginStateStatus.initial;
-  
+
   @readonly
   String? _errorMessage;
 
-  LoginControllerBase(this._loginService);
+  LoginControllerBase({required LoginService loginService})
+      : _loginService = loginService;
 
   Future<void> login(String email, String password) async {
     try {
       _loginStatus = LoginStateStatus.loading;
 
-      await _loginService.execute(email, password);
+      await _loginService.execute(
+        email: email,
+        password: password,
+      );
 
       _loginStatus = LoginStateStatus.success;
     } on UnauthorizedException {
       _errorMessage = 'Login ou senha inválidos';
       _loginStatus = LoginStateStatus.error;
-    } catch(e, s) {
+    } catch (e, s) {
       log('Erro ao realizar login', error: e, stackTrace: s);
       _errorMessage = 'Tenta novamente mais tarde';
       _loginStatus = LoginStateStatus.error;

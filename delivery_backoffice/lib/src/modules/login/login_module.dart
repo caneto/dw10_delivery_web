@@ -11,13 +11,13 @@ class LoginModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.lazySingleton<AuthRepository>(
-          (i) => AuthRepositoryImpl(i()),
+          (i) => AuthRepositoryImpl(dio: i()),
         ),
         Bind.lazySingleton<LoginService>(
-          (i) => LoginServiceImpl(i(), i()),
+          (i) => LoginServiceImpl(authRepository: i(), storage: i()),
         ),
         Bind.lazySingleton(
-          (i) => LoginController(i()),
+          (i) => LoginController(loginService: i()),
         ),
       ];
 
