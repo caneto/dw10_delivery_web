@@ -1,7 +1,7 @@
 import '../../dto/order/order_dto.dart';
 import '../../dto/order/order_product_dto.dart';
 import '../../models/orders/order_model.dart';
-import '../../models/orders/user_model.dart';
+import '../../models/user_model.dart';
 import '../../models/payment_type_model.dart';
 import '../../repositories/payment_type/payment_type_repository.dart';
 import '../../repositories/products/product_repository.dart';

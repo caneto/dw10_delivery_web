@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart' show immutable;
 
 import '../../models/orders/order_status.dart';
-import '../../models/orders/user_model.dart';
+import '../../models/user_model.dart';
 import '../../models/payment_type_model.dart';
 import 'order_product_dto.dart';
 
-class OrderDto {
+@immutable
+final class OrderDto {
   final int id;
   final DateTime date;
   final OrderStatus status;
@@ -14,7 +16,7 @@ class OrderDto {
   final String cpf;
   final PaymentTypeModel paymentTypeModel;
 
-  OrderDto({
+  const OrderDto({
     required this.id,
     required this.date,
     required this.status,

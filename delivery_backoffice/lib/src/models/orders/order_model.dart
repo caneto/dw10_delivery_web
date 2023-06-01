@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show immutable;
 
 import 'order_product_model.dart';
 import 'order_status.dart';
 
-class OrderModel {
+@immutable
+final class OrderModel {
   final int id;
   final DateTime date;
   final OrderStatus status;
@@ -13,7 +15,7 @@ class OrderModel {
   final String cpf;
   final int paymentTypeId;
 
-  OrderModel({
+  const OrderModel({
     required this.id,
     required this.date,
     required this.status,
@@ -37,22 +39,20 @@ class OrderModel {
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
-    return OrderModel(
-      id: (map['id'] ?? 0) as int,
-      date: DateTime.parse(map['date']),
-      status: OrderStatus.parse(map['status']),
-      orderProducts: List<OrderProductModel>.from(
-        (map['products']).map<OrderProductModel>(
-          (x) => OrderProductModel.fromMap(x as Map<String, dynamic>),
+  factory OrderModel.fromMap(Map<String, dynamic> map) => OrderModel(
+        id: (map['id'] ?? 0) as int,
+        date: DateTime.parse(map['date']),
+        status: OrderStatus.parse(map['status']),
+        orderProducts: List<OrderProductModel>.from(
+          (map['products']).map<OrderProductModel>(
+            (x) => OrderProductModel.fromMap(x as Map<String, dynamic>),
+          ),
         ),
-      ),
-      userId: map['user_id']?.toInt() ?? 0,
-      address: map['address'] ?? '',
-      cpf: map['cpf'] ?? '',
-      paymentTypeId: map['payment_type_id']?.toInt() ?? 0,
-    );
-  }
+        userId: map['user_id']?.toInt() ?? 0,
+        address: map['address'] ?? '',
+        cpf: map['cpf'] ?? '',
+        paymentTypeId: map['payment_type_id']?.toInt() ?? 0,
+      );
 
   String toJson() => json.encode(toMap());
 

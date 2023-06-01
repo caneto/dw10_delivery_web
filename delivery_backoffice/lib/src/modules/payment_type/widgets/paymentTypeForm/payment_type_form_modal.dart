@@ -153,7 +153,7 @@ class _PaymentTypeFormModalState extends State<PaymentTypeFormModal> {
                         }
                       },
                       icon: const Icon(Icons.save),
-                      label: const Text('Salvar'),
+                      label: const Text('Salvar', ),
                     ),
                   )
                 ],

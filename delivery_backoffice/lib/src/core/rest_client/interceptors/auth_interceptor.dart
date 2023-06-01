@@ -1,11 +1,13 @@
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import '../../global/constants.dart';
 import '../../global/global_context.dart';
 import '../../storage/storage.dart';
 
-class AuthInterceptor extends Interceptor {
+final class AuthInterceptor extends Interceptor {
   final Storage storage;
 
   AuthInterceptor(this.storage);
@@ -17,12 +19,12 @@ class AuthInterceptor extends Interceptor {
     handler.next(options);
   }
 
-   @override
+  @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    if(err.response?.statusCode == 401) {
+    if(err.response?.statusCode == HttpStatus.unauthorized) {
       GlobalContext.instance.loginExpire();
-    } else {
-      handler.next(err);
-    }
+      return;
+    } 
+    return handler.next(err);
   } 
 }

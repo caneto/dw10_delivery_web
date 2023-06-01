@@ -12,7 +12,6 @@ enum OrderStatus {
 
   const OrderStatus(this.name, this.acronym, this.color);
 
-  static OrderStatus parse(String acronym) {
-    return values.firstWhere((s) => s.acronym == acronym);
-  }
+  static OrderStatus parse(String acronym) => values.firstWhere((s) => s.acronym == acronym);
+
 }

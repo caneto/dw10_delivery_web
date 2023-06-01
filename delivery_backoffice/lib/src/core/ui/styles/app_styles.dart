@@ -19,6 +19,7 @@ class AppStyles {
         ),
         backgroundColor: ColorsApp.instance.primary,
         textStyle: TextStyles.instance.textButtonLabel,
+        foregroundColor: Colors.white,
       );
 }
 

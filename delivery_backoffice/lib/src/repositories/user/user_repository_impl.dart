@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../core/exceptions/respository_exception.dart';
 import '../../core/rest_client/custom_dio.dart';
-import '../../models/orders/user_model.dart';
+import '../../models/user_model.dart';
 import './user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {

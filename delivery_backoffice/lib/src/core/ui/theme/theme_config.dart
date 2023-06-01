@@ -19,10 +19,14 @@ class ThemeConfig {
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
     ),
+    useMaterial3: true,
+    cardColor: Colors.white,
+    cardTheme: const CardTheme(color: Colors.white, surfaceTintColor: Colors.white),
     colorScheme: ColorScheme.fromSeed(
       seedColor: ColorsApp.instance.primary,
       primary: ColorsApp.instance.primary,
       secondary: ColorsApp.instance.secundary,
+      onSecondary: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: AppStyles.instance.primaryButton,

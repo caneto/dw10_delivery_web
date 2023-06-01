@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorsApp {
+final class ColorsApp {
   static ColorsApp? _instance;
 
   ColorsApp._();

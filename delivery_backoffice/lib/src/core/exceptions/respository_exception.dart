@@ -1,6 +1,4 @@
-class RespositoryException implements Exception {
+final class RespositoryException implements Exception {
   final String message;
-  RespositoryException({
-    required this.message,
-  });  
+  const RespositoryException({required this.message});
 }

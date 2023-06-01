@@ -1,13 +1,14 @@
-
+import 'package:flutter/foundation.dart' show immutable;
 
 import '../../models/product_model.dart';
 
-class OrderProductDto {
+@immutable
+final class OrderProductDto {
   final ProductModel product;
   final int amount;
   final double totalPrice;
 
-  OrderProductDto({
+  const OrderProductDto({
     required this.product,
     required this.amount,
     required this.totalPrice,
