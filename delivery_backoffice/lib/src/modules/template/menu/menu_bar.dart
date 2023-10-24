@@ -27,7 +27,7 @@ class _MenuBarState extends State<MenuBar> with HistoryBackListner {
   }
 
   @override
-  void onHistoryBack(Event event) {
+  void onHistoryBack<Event>(Event event) {
     setState(() {
       selectedMenu = Menu.findByPath(Modular.to.path);
     });
