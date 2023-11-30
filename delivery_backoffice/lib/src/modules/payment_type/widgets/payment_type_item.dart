@@ -77,7 +77,7 @@ class PaymentTypeItem extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
