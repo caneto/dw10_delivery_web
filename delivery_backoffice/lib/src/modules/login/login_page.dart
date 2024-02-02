@@ -144,8 +144,7 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
                             Validatorless.required('Senha obrigatório'),
                             Validatorless.min(6, 'Deve conter 6 carecteres'),
                           ]),
-                          hintText: 'Digite uma senha valida',
-                          
+                          hintText: 'Digite uma senha valida',                          
                         ),
                         const SizedBox(
                           height: 30,
@@ -157,13 +156,13 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
                             onPressed: _enterButton,
                             child: const Text('Entrar'),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -177,7 +176,5 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
       FocusScope.of(context).unfocus();
       controller.login(_emailEC.text, _passwordEC.text);
     }
-  }
-
-  
+  }  
 }
